@@ -3,10 +3,7 @@
 session_start();
 $userIdCalendar= $_SESSION["userid"];
 
-$DBHOST = "127.0.0.1:3306";
-$DBUSER = "root";
-$DBPASS = "SHA123";
-$DBNAME = "collectiondb";
+include('../models/database.php');
 
 {   
 $conn = mysqli_connect($DBHOST, $DBUSER, $DBPASS, $DBNAME);
@@ -38,23 +35,6 @@ if(mysqli_num_rows($result) > 0) {
 
 }
 ?>
-<!DOCTYPE html>
-<html>
-<meta content="text/html; charset=UTF-8" http-equiv="content-type">
-<head>
-<title>Calendario Raccolta</title>
-</head>
-
-  <body style="background-image:URL('raccolta.jpg'); background-repeat: no-repeat; background-position: center -50%;">
-    <h1> Calendario </h1>
-       <a href= "logout.php" style="color:red; font-size:20px;"> <b>Logout<b> </a><br> 
-       <br>
-       <a href= "form.php" style="color:green; font-size:20px;"> Inserisci evento </a>
-       <br>
-       <br>
-   </body>
-          
-</html>
 
 
 <?php
@@ -128,7 +108,7 @@ function ShowCalendar($m,$y)
       $day= $j-($lunedi-1);
       $data = strtotime(date($y."-".$m."-".$day));
       $oggi = strtotime(date("Y-m-d"));
-      include 'database.php';
+      include ('../models/database.php');
       
       
       $userIdCalendar= $_SESSION["userid"];
@@ -152,7 +132,7 @@ if(mysqli_num_rows($result) > 0) {
           if (strtotime($str_data) == $data){  
           
            
-            $day = "<a href=\"eventi.php?day=$str_data\">$day</a>";
+            $day = "<a href=\"../views/vista_eventi.php?day=$str_data\"><span style='color:green'>$day</span></a>";
             
           }
         }
@@ -162,7 +142,7 @@ if(mysqli_num_rows($result) > 0) {
       {
         echo "<td>".$day."</td>";
       }else{
-        echo "<td><b>".$day."</b></td>";
+        echo "<td><span style='color:red'><b>".$day."</b></span></td>";
       }
     }
 
@@ -175,13 +155,49 @@ if(mysqli_num_rows($result) > 0) {
   echo "</table>";
 }
 ShowCalendar(date("m"),date("Y")); 
-?>
-<h1> Legenda: </h1>
 
-<ol>
-	<li style= "color: #0000ff; font-size:20px;" >Plastica</li>
-	<li style= "color: #007fff; font-size:20px;">Vetro</li>
-	<li style= "color: #e5be01; font-size:20px;">Carta</li>
-  <li style= "color: #008f39; font-size:20px;">Umido</li>
-	<li style= "color: #000000; font-size:20px;">Secco</li>
-</ol>
+
+
+$t=time();
+
+$giorno_di_raccolta = date("Y-m-d",$t);
+$conn = mysqli_connect($DBHOST, $DBUSER, $DBPASS, $DBNAME);
+
+$sql = "SELECT
+users.username,
+types_garbage.types_garbage,
+time.date, time.time, time.timeid,time.types_garbageid
+FROM users
+INNER JOIN time
+ON users.usersid= time.usersid
+INNER JOIN types_garbage
+ON types_garbage.types_garbageid= time.types_garbageid
+WHERE users.usersid= '$userIdCalendar'
+AND time.date= '$giorno_di_raccolta'";
+
+$result = mysqli_query($conn, $sql) or die (mysqli_error($conn));
+if(mysqli_num_rows($result) > 0) {
+  
+
+  while($fetch = mysqli_fetch_array($result)){   
+
+    $del_id = $fetch['timeid'];
+    $types_g = $fetch['types_garbageid'];
+    $types = stripslashes($fetch['types_garbage']);
+    $time = stripslashes($fetch['time']);
+    $str_data = date($fetch['date']); 
+    $time = substr( $time, 0, 5 );
+    echo "Raccolta <b> $types </b><br>" . $time . "<br>";
+  
+    
+  }
+
+} else {
+  echo ("Nessun evento in programma per la giornata di oggi!");
+}
+
+
+
+
+?>
+

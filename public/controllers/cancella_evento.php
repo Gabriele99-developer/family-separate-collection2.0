@@ -1,19 +1,10 @@
-<html>
-<meta content="text/html; charset=UTF-8" http-equiv="content-type">
-<head>
-<title>Elimina Evento</title>
-</head>
-<body style="background-image:URL('raccolta.jpg'); background-repeat: no-repeat; background-position: center -50%;">
-</body>
+
 <?php
 session_start();
 $userIdCalendar= $_SESSION["userid"];
 
 
-$DBHOST = "127.0.0.1:3306";
-$DBUSER = "root";
-$DBPASS = "SHA123";
-$DBNAME = "collectiondb";
+include('../models/database.php');
 $del_id = $_GET["id"];
 
 
@@ -51,16 +42,7 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])  )
 
   ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<h1>Attenzione!</h1>
-Si sta per eliminare l'appuntamento del
-<b><?php echo stripslashes($str_data); ?></b> 
-raccolta<b> <?php echo stripslashes($types); ?>.</b><br>
-Confermare per eseguire l'operazione.<br>
-<br>
-<input name="del_id" type="hidden" value="<?php echo $del_id; ?>">
-<input name="submit" type="submit" value="Cancella">
-</form>
+
 
   <?php
 }
@@ -72,11 +54,10 @@ elseif(isset($_POST['del_id']) && is_numeric($_POST['del_id']))
   if (mysqli_query($conn, "DELETE FROM time WHERE timeid = '$del_id2'")or die(mysqli_error($conn)))
   {
     echo "Cancellazione del servizio avvenuta con successo<br>
-    <a href=\"calendario_raccolta.php\">Torna al calendario</a>";
+    <a href=\"vista_calendario.php\">Torna al calendario</a>";
   }
  
-  header("Location:calendario_raccolta.php");
+  header("Location:../views/vista_calendario.php");
 }
 }
 ?>
-</html>

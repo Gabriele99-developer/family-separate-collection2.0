@@ -1,23 +1,10 @@
-<body style="background-image:URL('raccolta.jpg'); background-repeat: no-repeat; background-position: center -50%;">
-<h1> Legenda: </h1>
 
-<ol>
-	<li style= "color: #0000ff; font-size:20px;" >Plastica</li>
-	<li style= "color: #007fff; font-size:20px;">Vetro</li>
-	<li style= "color: #e5be01; font-size:20px;">Carta</li>
-  <li style= "color: #008f39; font-size:20px;">Umido</li>
-	<li style= "color: #000000; font-size:20px;">Secco</li>
-</ol>
-</body>
 <?php
 session_start();
 $userIdCalendar= $_SESSION["userid"];
 
 
-$DBHOST = "127.0.0.1:3306";
-$DBUSER = "root";
-$DBPASS = "SHA123";
-$DBNAME = "collectiondb";
+include('../models/database.php');
 
 {   
   $conn = mysqli_connect($DBHOST, $DBUSER, $DBPASS, $DBNAME);
@@ -52,7 +39,7 @@ if(isset($_POST['mod_id'])&&(is_numeric($_POST['mod_id'])))
   if(mysqli_query($conn,$sql) or die (mysqli_error($conn)))
   {
     echo "Modifica effettuata con successo.<br>
-    Vai al <a href=\"calendario_raccolta.php\">Calendario</a>";
+    Vai al <a href=\"../views/vista_calendario.php\">Calendario</a>";
   }
 }
 elseif (isset($_GET['id']) && is_numeric($_GET['id']))
@@ -65,22 +52,6 @@ elseif (isset($_GET['id']) && is_numeric($_GET['id']))
   $str_data = date($fetch['date']); 
   ?>
 
-<html>
-  <head>
-    <title>Modifica Evento</title>
-</head>
-<body>
-  <h3>Modifica Evento Corrente</h3>
-  <form name="tipo" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">Inserisci tipologia rifiuto:<br>
-  <input type="text" name="types_garbageid" value="<?php echo $types_g; ?>"> 
-  <br>Inserisci ora:<br>
-  <input type="text" name="time" value="<?php echo $time; ?>"> 
-  <br>Inserisci data:<br>
-  <input type="text" name="date" value="<?php echo $str_data; ?>">
-  <br>
-  <input type="hidden" name="mod_id" value="<?php echo $id2; ?>"> <br>
-  <input type="submit" name="submit" value="modifica">
- </body>
 
 
   <?php

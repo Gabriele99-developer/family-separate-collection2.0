@@ -1,19 +1,9 @@
-<html>
-<meta content="text/html; charset=UTF-8" http-equiv="content-type">
-<head>
-<title>Evento</title>
-</head>
-<body style="background-image:URL('raccolta.jpg'); background-repeat: no-repeat; background-position: center -50%;">
-</body>
 <?php
 
 session_start();
 $userIdCalendar= $_SESSION["userid"];
 
-$DBHOST = "127.0.0.1:3306";
-$DBUSER = "root";
-$DBPASS = "SHA123";
-$DBNAME = "collectiondb";
+include('../models/database.php');
 $giorno_di_raccolta = $_GET['day'];
 
 {   
@@ -42,9 +32,10 @@ if(mysqli_num_rows($result) > 0) {
     $types = stripslashes($fetch['types_garbage']);
     $time = stripslashes($fetch['time']);
     $str_data = date($fetch['date']); 
+    $time = substr( $time, 0, 5 );
     echo "Raccolta <b> $types </b><br>" . $time . "<br>
-    <a href=\"cancella_evento.php?id=$del_id\">Cancella</a> |
-    <a href=\"modifica_evento.php?id=$del_id\">Modifica</a>
+    <a href=\"../views/vista_cancella.php?id=$del_id\">Cancella</a> |
+    <a href=\"../views/vista_modifica.php?id=$del_id\">Modifica</a>
     <hr>";
     
   }
@@ -53,4 +44,3 @@ if(mysqli_num_rows($result) > 0) {
 
 }
 ?>
-</html>
