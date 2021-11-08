@@ -1,12 +1,6 @@
 <?php
 session_start();
-
-// elimina le variabili
-$_SESSION["userid"] = array();
-
-// elimina la sessione
+$_SESSION["id"] = array();
 session_destroy();
-
 header("Location:../index.php");
-
 ?>

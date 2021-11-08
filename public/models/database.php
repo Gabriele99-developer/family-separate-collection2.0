@@ -4,5 +4,4 @@ $DBUSER = "root";
 $DBPASS = "SHA123";
 $DBNAME = "collectiondb";
 $con = @mysqli_connect($DBHOST,$DBUSER,$DBPASS) or die (mysql_error());
-
 ?>
