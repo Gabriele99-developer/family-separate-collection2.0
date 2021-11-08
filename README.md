@@ -1,34 +1,34 @@
-# Calendario Raccolta Differenziata
+# Separate Collection Calendar
 
-Questo progetto è un'applicazione PHP che può aiutare le famiglie e non solo a tenere traccia dei giorni della settimana in cui avviene il riciclaggio.
+This project is a PHP application that can help families and others keep track of the days of the week when recycling takes place.
 
-# Primo step 
+# First step
 
-Appena si aprirà l'applicazione ci sarà un piccolo form che richiederà immediatamente "username" e "password".
-Se l'utente è già registrato accederà subito, se è il primo accesso verrà registrato in automatico nel database.
+As soon as the application opens, there will be a small form that will immediately ask for "username" and "password".
+If the user is already registered he will log in immediately, if he is the first log in he will be automatically registered in the database.
 
-# Secondo step
+# Second step
 
-Appena l'utente sarà loggato, gli si presenterà un calendario che contrassegna il giorno corrente di colore "rosso", se invece nel giorno corrente c'é in programma un evento il giorno sarà di colore "verde" e verrà mostrato a video il tipo di evento.
+As soon as the user is logged in, he will be presented with a calendar that marks the current day in "red" color, if instead an event is scheduled for the current day, the day will be in "green" color and the type will be shown on the screen of event.
 
-# Terzo step
+# Third step
 
-L'utente avrà a disposizione una legenda, che tramite un numero e un colore identifica il tipo di rifiuto:
-1.Plastica
-2.Vetro
-3.Carta
-4.Umido
-5.Secco
+The user will have at his disposal a legend, which through a number and a color identifies the type of waste:
+1.Plastic
+2.Glass
+3.Paper
+4.Humid
+5.Dry
 
-# Quarto step 
+# Fourth step 
 
-L'utente potrà fare tre cose sul calendario:
-*Inserire l'evento
+The user can do three things on the calendar:
+*Enter the event
 
-*Eliminare l'evento
+*Delete the event
 
-*Modificare l'evento
+*Edit the event
 
-# Quinto step
+# Fifth step
 
-In un giorno può essere inserito più di un evento.
+More than one event can be entered in a day.
